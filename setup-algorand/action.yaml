@@ -26,6 +26,5 @@ runs:
       run: cp config.test sandbox/
 
     - name: Run Algorand Sandbox
-      working-directory: sandbox
       shell: 'script -q -e -c "bash {0}"' # hacky hack to make TTY work
-      run: ./sandbox up test -v
+      run: cd sandbox && ./sandbox up test -v
