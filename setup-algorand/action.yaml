@@ -1,23 +1,31 @@
-name: "Hello World"
-description: "Greet someone"
+name: "Setup Algorand"
+description: "Setup Algorand"
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
+  python-version: # python version
+    description: "Python version"
     required: true
-    default: "World"
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+    default: "3.10"
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-number::$(echo $RANDOM)"
-      shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
-    - run: goodbye.sh
-      shell: bash
+    - name: Setup Python ${{ inputs.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: "${{ inputs.python-version }}"
+
+    - name: Checkout algorand sandbox
+      uses: actions/checkout@master
+      with:
+        repository: algorand/sandbox
+
+    - name: Print Directory
+      run: |
+        ls -ltr
+
+    - name: copy config
+      run: cp config.test sandbox/
+
+    - name: Run Algorand Sandbox
+      working-directory: sandbox
+      shell: 'script -q -e -c "bash {0}"' # hacky hack to make TTY work
+      run: ./sandbox up test -v
