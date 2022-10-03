@@ -25,4 +25,5 @@ runs:
 
     - name: Run Algorand Sandbox
       working-directory: algorand-sandbox
+      shell: 'script -q -e -c "bash {0}"' # hacky hack to make TTY work
       run: ./sandbox up test -v
