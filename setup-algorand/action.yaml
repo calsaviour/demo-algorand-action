@@ -8,9 +8,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
     - name: Setup Python ${{ inputs.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -29,7 +26,7 @@ runs:
 
     - name: copy config
       shell: bash
-      run: cp config.test sandbox/
+      run: cp ${{ github.action_path }}/config.test algorand-sandbox/
 
     # - name: Run Algorand Sandbox
     #   run: cd sandbox && ./sandbox up test -v
