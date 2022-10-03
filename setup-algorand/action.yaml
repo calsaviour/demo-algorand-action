@@ -18,9 +18,9 @@ runs:
       with:
         repository: algorand/sandbox
 
-    # - name: Print Directory
-    #   run: |
-    #     ls -ltr
+    - name: Print Directory
+      run: |
+        ls -ltr
 
     # - name: copy config
     #   run: cp config.test sandbox/
