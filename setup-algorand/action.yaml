@@ -11,19 +11,19 @@ runs:
     - name: Setup Python ${{ inputs.python-version }}
       uses: actions/setup-python@v4
       with:
-        python-version: "${{ inputs.python-version }}"
+        python-version: ${{ inputs.python-version }}
 
-    - name: Checkout algorand sandbox
-      uses: actions/checkout@master
-      with:
-        repository: algorand/sandbox
+    # - name: Checkout algorand sandbox
+    #   uses: actions/checkout@master
+    #   with:
+    #     repository: algorand/sandbox
 
-    - name: Print Directory
-      run: |
-        ls -ltr
+    # - name: Print Directory
+    #   run: |
+    #     ls -ltr
 
-    - name: copy config
-      run: cp config.test sandbox/
+    # - name: copy config
+    #   run: cp config.test sandbox/
 
-    - name: Run Algorand Sandbox
-      run: cd sandbox && ./sandbox up test -v
+    # - name: Run Algorand Sandbox
+    #   run: cd sandbox && ./sandbox up test -v
