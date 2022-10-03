@@ -19,6 +19,7 @@ runs:
         repository: algorand/sandbox
 
     - name: Print Directory
+      shell: bash
       run: |
         ls -ltr
 
