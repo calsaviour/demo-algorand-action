@@ -19,14 +19,10 @@ runs:
         repository: algorand/sandbox
         path: algorand-sandbox
 
-    - name: Print Directory
-      shell: bash
-      run: |
-        ls -ltr
-
     - name: copy config
       shell: bash
       run: cp ${{ github.action_path }}/config.test algorand-sandbox/
 
-    # - name: Run Algorand Sandbox
-    #   run: cd sandbox && ./sandbox up test -v
+    - name: Run Algorand Sandbox
+      working-directory: algorand-sandbox
+      run: ./sandbox up test -v
