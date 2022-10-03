@@ -13,10 +13,10 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
 
-    # - name: Checkout algorand sandbox
-    #   uses: actions/checkout@master
-    #   with:
-    #     repository: algorand/sandbox
+    - name: Checkout algorand sandbox
+      uses: actions/checkout@master
+      with:
+        repository: algorand/sandbox
 
     # - name: Print Directory
     #   run: |
