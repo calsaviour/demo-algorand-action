@@ -1,0 +1,32 @@
+name: "Install PyTeal"
+description: "Install PyTeal"
+inputs:
+  python-version: # python version
+    description: "Python version"
+    required: true
+    default: "3.10"
+  pyteal-version: # pyteal version
+    description: "PyTeal Version"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python ${{ inputs.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install python dependencies
+      run: make setup-development
+
+    - name: lint
+      run: make lint
+
+    - name: Install PyTeal Latest Version
+      run: |
+        pip3 install pyteal
+
+    - name: Install PyTeal ${{ inputs.pyteal-version }}
+      run: |
+        pip3 install pyteal==${{ inputs.pyteal-version }}
