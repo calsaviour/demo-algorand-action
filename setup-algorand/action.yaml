@@ -3,8 +3,21 @@ description: "Setup Algorand"
 inputs:
   python-version: # python version
     description: "Python version"
-    required: true
+    required: false
     default: "3.10"
+  sandbox-note:
+    description: "Note text"
+    required: true
+  teal-directory:
+    description: "Teal files directory"
+    required: false
+    default: "."
+  approval-program-name: # approval program name
+    description: "Approval Program Name"
+    required: true
+  clear-program-name: # clear program name
+    description: "Clear Program Name"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -27,3 +40,25 @@ runs:
       working-directory: algorand-sandbox
       shell: 'script -q -e -c "bash {0}"' # hacky hack to make TTY work
       run: ./sandbox up test -v
+
+    - name: Get Account Address
+      shell: bash
+      run: |
+        ACCOUNT_ADDRESS=$(./sandbox goal account list | awk '{print $2}' | head -n 1)
+        echo "ACCOUNT_ADDRESS=${ACCOUNT_ADDRESS}" >> $GITHUB_ENV
+
+    - name: Print environment variable
+      shell: bash
+      run: |
+        echo $GITHUB_ENV
+
+    - name: Copy Approval Program and Clear Program
+      shell: bash
+      run: |
+        ./sandbox copyTo ${{ inputs.teal-directory}}/${{ inputs.approval-program-name }}
+        ./sandbox copyTo ${{ inputs.teal-directory}}/${{ inputs.clear-program-name }}
+
+    - name: Create smart contract in the test environment
+      shell: bash
+      run: |
+        ./sandbox goal app create --creator ${ACCOUNT_ADDRESS} --approval-prog ${{ inputs.approval-program-name }} --clear-prog ${{ inputs.clear-program-name }} --note ${{ inputs.sandbox-note }} --global-byteslices 3 --global-ints 2 --local-byteslices 0 --local-ints 0 --app-arg str:TestName --app-arg str:TestImage --app-arg str:TestDescription --app-arg int:1000000
