@@ -17,20 +17,14 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
 
-    - name: Install python dependencies
-      shell: bash
-      run: make setup-development
-
-    - name: lint
-      shell: bash
-      run: make lint
-
     - name: Install PyTeal Latest Version
+      if: ${{ inputs.pyteal-version == '' }}
       shell: bash
       run: |
         pip3 install pyteal
 
     - name: Install PyTeal ${{ inputs.pyteal-version }}
+      if: ${{ inputs.pyteal-version != '' }}
       shell: bash
       run: |
         pip3 install pyteal==${{ inputs.pyteal-version }}
