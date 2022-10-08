@@ -11,7 +11,7 @@ inputs:
   teal-directory:
     description: "Teal files directory"
     required: false
-    default: ".."
+    default: "."
   approval-program-name: # approval program name
     description: "Approval Program Name"
     required: true
@@ -57,8 +57,8 @@ runs:
       working-directory: algorand-sandbox
       shell: bash
       run: |
-        ./sandbox copyTo ${{ inputs.teal-directory}}/${{ inputs.approval-program-name }}
-        ./sandbox copyTo ${{ inputs.teal-directory}}/${{ inputs.clear-program-name }}
+        ./sandbox copyTo ../${{ inputs.teal-directory}}/${{ inputs.approval-program-name }}
+        ./sandbox copyTo ../${{ inputs.teal-directory}}/${{ inputs.clear-program-name }}
 
     - name: Create smart contract in the test environment
       working-directory: algorand-sandbox
