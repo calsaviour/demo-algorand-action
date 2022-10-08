@@ -3,7 +3,7 @@ description: "Install PyTeal"
 inputs:
   python-version: # python version
     description: "Python version"
-    required: true
+    required: false
     default: "3.10"
   pyteal-version: # pyteal version
     description: "PyTeal Version"
